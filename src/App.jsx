@@ -9,7 +9,9 @@ import Dashboard from "./pages/Dashboard";
 
 // Components
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import PublicRoute from "./components/auth/PublicRoute";
 import Navbar from "./components/layout/Navbar";
+
 
 export default function App() {
     return (
@@ -32,8 +34,16 @@ export default function App() {
                         </ProtectedRoute>
                     }
                 />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
+                <Route path="/login" element={
+                    <PublicRoute>
+                    <Login />
+                    </PublicRoute>
+                } />
+                <Route path="/register" element={
+                    <PublicRoute>
+                    <Register />
+                    </PublicRoute>
+                } />
             </Routes>
         </div>
     );

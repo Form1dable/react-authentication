@@ -5,14 +5,6 @@ import authService from "./authService";
 
 const accessToken = JSON.parse(localStorage.getItem("accessToken"));
 
-const initialState = {
-    accessToken: accessToken ? accessToken : null,
-    isLoading: false,
-    isError: false,
-    isSuccess: false,
-    message: "",
-};
-
 // Create action creator for register
 
 // 1. createAsyncThunk receives a action type as a string and a async callback function that will return a promise with arguements (user data and thunkAPI)
@@ -61,6 +53,14 @@ export const login = createAsyncThunk(
 export const logout = createAsyncThunk("auth/logout", () => {
     authService.logout();
 });
+
+const initialState = {
+    accessToken: accessToken ? accessToken : null,
+    isLoading: false,
+    isError: false,
+    isSuccess: false,
+    message: "",
+};
 
 const authSlice = createSlice({
     name: "auth",

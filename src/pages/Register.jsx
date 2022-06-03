@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-
 import { register } from "../features/auth/authSlice";
 
 export default function Register() {
-    const dispatch = useDispatch;
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         handle: "",
         email: "",
@@ -20,7 +22,6 @@ export default function Register() {
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault();
         if (formData.password !== formData.confirm_password) return;
         const userData = {
             handle: formData.handle,
@@ -28,7 +29,9 @@ export default function Register() {
             password: formData.password,
             confirm_password: formData.confirm_password,
         };
+
         dispatch(register(userData));
+        navigate("/login");
     };
 
     return (
@@ -63,7 +66,7 @@ export default function Register() {
                     value={formData.confirm_password}
                     onChange={handleFormChange}
                 />
-                <button onSubmit={handleSubmit}>Register</button>
+                <button onClick={handleSubmit}>Register</button>
             </form>
         </div>
     );

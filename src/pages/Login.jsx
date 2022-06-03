@@ -7,13 +7,22 @@ import { login } from "../features/auth/authSlice";
 
 export default function Login() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { accessToken, isSuccess } = useSelector((state) => state.auth);
     const [formData, setFormData] = useState({
         handle: "",
         password: "",
     });
 
+    useEffect(() => {
+        if (isSuccess || accessToken) {
+            navigate("/");
+        }
+    }, [accessToken, navigate]);
+
     const handleFormChange = (e) => {
         setFormData({
+            ...formData,
             [e.target.name]: e.target.value,
         });
     };
@@ -45,7 +54,7 @@ export default function Login() {
                     value={formData.password}
                     onChange={handleFormChange}
                 />
-                <button onSubmit={handleSubmit}>Login</button>
+                <button onClick={handleSubmit}>Login</button>
             </form>
         </div>
     );
